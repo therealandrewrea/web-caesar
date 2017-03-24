@@ -17,12 +17,36 @@
 import webapp2
 import caesar
 
+page_header = """
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Web Caesar</title>
+    </head>
+        <body>
+        """
+
+page_footer = """
+</body>
+</html>
+"""
+
+textarea = """
+<form method="post">
+    <textarea name="text" style="height: 100px; width: 400px;"></textarea>
+        <br>
+    <input type="submit" value="Encrypt!"/>
+    """
+
 class MainHandler(webapp2.RequestHandler):
 
     def get(self):
         message = "Test me Ssage!"
         encrypted_message = caesar.encrypt(message,13)
-        self.response.write(encrypted_message)
+        encrypt_window = "<textarea>" + encrypted_message + "</textarea>"
+        submit = """<input type="submit" value="Encrypt!"/>"""
+        encrypt_form = """<form method="post">""" + encrypt_window + """</form>"""
+        self.response.write(encrypt_form + submit)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
